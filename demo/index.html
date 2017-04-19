@@ -1,0 +1,79 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+  <title>anypoint-radio-button demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../anypoint-styles/colors.html">
+
+  <link rel="import" href="../anypoint-radio-button.html">
+
+  <style is="custom-style" include="demo-pages-shared-styles">
+    html {
+      font-size: 65%;
+    }
+
+    .vertical-section-container {
+      max-width: 600px;
+    }
+
+    anypoint-radio-button {
+      margin-right: 24px;
+    }
+
+  </style>
+</head>
+<body unresolved>
+  <div class="vertical-section-container centered">
+    <h3>Anypoint radio buttons can be checked, unchecked, or disables</h3>
+    <demo-snippet class="centered-demo">
+      <template>
+        <anypoint-radio-button>Option #1</anypoint-radio-button>
+        <anypoint-radio-button checked>Option #2</anypoint-radio-button>
+        <anypoint-radio-button disabled>Option #3</anypoint-radio-button>
+      </template>
+    </demo-snippet>
+
+    <h3>Anypoint radio buttons can be styled</h3>
+    <demo-snippet class="centered-demo">
+      <template>
+        <style is="custom-style">
+        anypoint-radio-button.red {
+          --anypoint-radio-button-checked-color: var(--anypoint-color-danger);
+          --anypoint-radio-button-unchecked-color: var(--anypoint-color-danger);
+          --anypoint-radio-button-label-color: var(--anypoint-color-danger);
+        }
+        anypoint-radio-button.green {
+          --anypoint-radio-button-checked-color: var(--anypoint-color-success);
+          --anypoint-radio-button-unchecked-color: var(--anypoint-color-success);
+          --anypoint-radio-button-label-color: var(--anypoint-color-success);
+        }
+        anypoint-radio-button.unchecked {
+          --anypoint-radio-button-unchecked-background-color: var(--anypoint-color-aluminum3);
+          --anypoint-radio-button-checked-background-color: #fff;
+        }
+        </style>
+        <anypoint-radio-button class="red">Invalid option</anypoint-radio-button>
+        <anypoint-radio-button checked class="green">Valid option</anypoint-radio-button>
+        <anypoint-radio-button class="unchecked">Half selected</anypoint-radio-button>
+      </template>
+    </demo-snippet>
+  </div>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!--
+@license
+Copyright 2016 The Advanced REST client authors <arc@mulesoft.com>
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-checked-element-behavior/iron-checked-element-behavior.html">
+<link rel="import" href="../iron-behaviors/iron-button-state.html">
+<link rel="import" href="../anypoint-validatable-behavior/anypoint-validatable-behavior.html">
+<link rel="import" href="../anypoint-styles/typography.html">
+<link rel="import" href="../anypoint-styles/colors.html">
+<link rel="import" href="../anypoint-behaviors/anypoint-hoverable-behavior.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<!--
+`<anypoint-radio-button>` is Anypoint styled radio button that can be either
+checked or unchecked.
+User can tap the radio button to check or uncheck it.
+
+Use a `<anypoint-radio-group>` to group a set of radio buttons.  When radio buttons
+are inside a radio group, exactly one radio button in the group can be checked
+at any time.
+
+### Example
+```
+<anypoint-radio-button></anypoint-radio-button>
+<anypoint-radio-button>Label</anypoint-radio-button>
+<anypoint-radio-button checked></anypoint-radio-button>
+```
+
+### Styling
+`<anypoint-radio-button>` provides the following custom properties and mixins for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--anypoint-radio-button` | Mixin applied to the element | `{}`
+`--anypoint-radio-button-size` | Size of the button (the circle) | `20px`
+`--anypoint-radio-button-radio-container` |  A mixin applied to the internal radio container | `{}`
+`--anypoint-radio-button-unchecked-color` | Radio button border color when the input is not checked | `--anypoint-color-aluminum5`
+`--anypoint-radio-button-unchecked-background-color` | Fill color of unchecked button | `#fff`
+`--anypoint-radio-button-checked-color` | Radio button border color when the input is checked | `--anypoint-color-primary`
+`--anypoint-radio-button-checked-background-color` | Fill color of checked button | `#fff`
+`--anypoint-radio-button-label-spacing` | MArgin between the button and label | `5px`
+
+@group Anypoint Elements
+@element anypoint-radio-button
+@demo demo/index.html
+-->
+<dom-module id="anypoint-radio-button">
+  <template>
+    <style>
+    :host {
+      display: inline-block;
+      line-height: 0;
+      white-space: nowrap;
+      cursor: pointer;
+      @apply(--anypoint-font-common-base);
+    }
+
+    :host(:focus) {
+      outline: none;
+    }
+
+    #radioContainer {
+      @apply(--layout-inline);
+      @apply(--layout-center-center);
+      position: relative;
+      width: var(--anypoint-radio-button-size, 20px);
+      height: var(--anypoint-radio-button-size, 20px);
+      vertical-align: middle;
+
+      @apply(--anypoint-radio-button-radio-container);
+    }
+
+    #offRadio, #onRadio {
+      position: absolute;
+      box-sizing: border-box;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    #offRadio {
+      border: 1px solid var(--anypoint-radio-button-unchecked-color, --anypoint-color-aluminum5);
+      background-color: transparent;
+      transition: border-color 0.28s ease-in-out, box-shadow 0.25s ease-in-out;
+    }
+
+    #onRadio {
+      background-color: var(--anypoint-radio-button-unchecked-background-color, #fff);
+      -webkit-transform: scale(0.89);
+      transform: scale(0.89);
+      transition: -webkit-transform ease 0.28s;
+      transition: transform ease 0.28s;
+      will-change: transform;
+    }
+
+    :host([checked]) #offRadio {
+      border-color: var(--anypoint-radio-button-checked-color, --anypoint-color-primary);
+      background-color: var(--anypoint-radio-button-checked-color, --anypoint-color-primary);
+    }
+
+    :host([checked]) #onRadio {
+      -webkit-transform: scale(0.5);
+      transform: scale(0.5);
+      background-color: var(--anypoint-radio-button-checked-background-color, #fff);
+    }
+
+    :host([hovered]):not([checked]) #offRadio {
+       box-shadow: inset 0 0 0 0.5em #fff, 0 0 0 0.25em rgba(0,0,0,.12);
+    }
+
+    #radioLabel {
+      line-height: normal;
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: var(--anypoint-radio-button-label-spacing, 5px);
+      white-space: normal;
+      color: var(--anypoint-radio-button-label-color, --anypoint-color-steel1);
+    }
+
+    :host-context([dir="rtl"]) #radioLabel {
+      margin-left: 0;
+      margin-right: var(--anypoint-radio-button-label-spacing, 5px);
+    }
+
+    #radioLabel[hidden] {
+      display: none;
+    }
+
+    /* disabled state */
+    :host([disabled]) #offRadio {
+      border-color: var(--anypoint-radio-button-unchecked-color, --anypoint-color-steel1);
+      opacity: 0.5;
+    }
+
+    :host([disabled][checked]) #onRadio {
+      background-color: var(--anypoint-radio-button-unchecked-color, --anypoint-color-steel1);
+      opacity: 0.5;
+    }
+
+    :host([disabled]) #radioLabel {
+      opacity: 0.65;
+    }
+    </style>
+    <div id="radioContainer">
+      <div id="offRadio"></div>
+      <div id="onRadio"></div>
+    </div>
+    <div id="radioLabel"><content></content></div>
+  </template>
+  <script>
+  Polymer({
+    is: 'anypoint-radio-button',
+
+    behaviors: [
+      Polymer.IronButtonState,
+      Polymer.IronControlState,
+      Polymer.IronCheckedElementBehavior,
+      Anypoint.AnypointHoverableBehavior
+    ],
+
+    hostAttributes: {
+      role: 'radio',
+      'aria-checked': false,
+      tabindex: 0
+    },
+
+    properties: {
+      /**
+       * Fired when the checked state changes due to user interaction.
+       *
+       * @event change
+       */
+      /**
+       * Fired when the checked state changes.
+       *
+       * @event iron-change
+       */
+      ariaActiveAttribute: {
+        type: String,
+        value: 'aria-checked'
+      }
+    },
+
+    /**
+     * Synchronizes the element's `active` and `checked` state.
+     */
+    _buttonStateChanged: function() {
+      if (this.disabled) {
+        return;
+      }
+      if (this.isAttached) {
+        this.checked = this.active;
+      }
+    }
+  });
+  </script>
+</dom-module>
