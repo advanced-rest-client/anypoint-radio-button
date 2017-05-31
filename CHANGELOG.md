@@ -1,3 +1,13 @@
+<a name="0.1.2"></a>
+## [0.1.2](https://github.com/advanced-rest-client/anypoint-radio-button/compare/0.1.1...v0.1.2) (2017-05-31)
+
+
+### Update
+
+* Updated license information to match Anypoint licence ([76eff32bb8a63ca934828b6230f13f8c9ea8776c](https://github.com/advanced-rest-client/anypoint-radio-button/commit/76eff32bb8a63ca934828b6230f13f8c9ea8776c))
+
+
+
 <a name="0.1.1"></a>
 ## 0.1.1 (2017-04-19)
 
