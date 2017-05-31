@@ -1,6 +1,6 @@
 {
   "name": "anypoint-radio-button",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "All rights reserved to Mulesoft Inc.",
   "description": "A Anypoint radio button",
   "devDependencies": {
